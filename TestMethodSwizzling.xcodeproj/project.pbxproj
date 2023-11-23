@@ -11,6 +11,8 @@
 		21D498682B0B4EA500890EDC /* TestMethodSwizzling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D4985D2B0B4EA500890EDC /* TestMethodSwizzling.framework */; };
 		21D4986D2B0B4EA500890EDC /* TestMethodSwizzlingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D4986C2B0B4EA500890EDC /* TestMethodSwizzlingTests.m */; };
 		21D4986E2B0B4EA500890EDC /* TestMethodSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = 21D498602B0B4EA500890EDC /* TestMethodSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		21D498782B0B4EE200890EDC /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D498772B0B4EE200890EDC /* Test.m */; };
+		21DD14962B0F12E000DEB339 /* NSCTFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 21DD14952B0F12E000DEB339 /* NSCTFont.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,8 @@
 		21D498612B0B4EA500890EDC /* TestMethodSwizzling.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = TestMethodSwizzling.docc; sourceTree = "<group>"; };
 		21D498672B0B4EA500890EDC /* TestMethodSwizzlingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestMethodSwizzlingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D4986C2B0B4EA500890EDC /* TestMethodSwizzlingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestMethodSwizzlingTests.m; sourceTree = "<group>"; };
+		21D498772B0B4EE200890EDC /* Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
+		21DD14952B0F12E000DEB339 /* NSCTFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSCTFont.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,8 @@
 			children = (
 				21D498602B0B4EA500890EDC /* TestMethodSwizzling.h */,
 				21D498612B0B4EA500890EDC /* TestMethodSwizzling.docc */,
+				21D498772B0B4EE200890EDC /* Test.m */,
+				21DD14952B0F12E000DEB339 /* NSCTFont.h */,
 			);
 			path = TestMethodSwizzling;
 			sourceTree = "<group>";
@@ -93,6 +99,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21D4986E2B0B4EA500890EDC /* TestMethodSwizzling.h in Headers */,
+				21DD14962B0F12E000DEB339 /* NSCTFont.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21D498622B0B4EA500890EDC /* TestMethodSwizzling.docc in Sources */,
+				21D498782B0B4EE200890EDC /* Test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
