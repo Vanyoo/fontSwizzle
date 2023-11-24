@@ -67,8 +67,8 @@ SEL originalClassMethodSel;
 
     [self changeMethod: "NSCTFont" om:@"fontWithSize:" sm:@"hook_fontWithSize:"];
     [self changeMethod: "NSCTFont" om:@"fontForAppearance:" sm:@"hook_fontForAppearance:"];
-//    [self changeMethod: "NSCTFont" om:@"screenFont:" sm:@"hook_screenFont:"];
-//    [self changeMethod: "NSCTFont" om:@"verticalFont:" sm:@"hook_verticalFont:"];
+    [self changeMethod: "NSCTFont" om:@"screenFont:" sm:@"hook_screenFont:"];
+    [self changeMethod: "NSCTFont" om:@"verticalFont:" sm:@"hook_verticalFont:"];
 //    [self changeMethod: "NSCTFont" om:@"fontDescriptor" sm:@"hook_fontDescriptor"]; 返回的应该不是NSFont对象，所以会报错
 //    [self changeMethod: "NSCTFont" om:@"fontName" sm:@"hook_fontName"];
 //    [self changeMethod: "NSCTFont" om:@"displayName" sm:@"hook_displayName"];
@@ -109,143 +109,110 @@ SEL originalClassMethodSel;
     };
 }
 
-//- (CGFloat) getSize:(NSFont*)nf {
-//    if ([nf systemFontSize] != NULL) {
-//        return [nf systemFontSize];
-//    } else {
-//        return 12;
-//    }
-//
-//}
+- (NSFont*)generateFont:(const CGFloat)fontSize {
+    return [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
+}
 
 // success
 - (id)hook_fontWithName:(NSString *)fontName size:(CGFloat)fontSize {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_FontWithName] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // success
 - (id)hook_fontWithName:(NSString *)fontName matrix:(const CGFloat *)fontMatrix {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_FontWithName_matrix] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
     NSCTFont *f = [self hook_fontWithName:fontName matrix:fontMatrix];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:f.pointSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: f.pointSize];
 }
 // success
 - (id)hook_fontWithDescriptor:(NSFontDescriptor *)fontDescriptor size:(CGFloat)fontSize {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_FontWithDescriptor] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // success
 - (id)hook_systemFontOfSize:(CGFloat)fontSize {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_systemFontOfSize] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // success
 - (id)hook_labelFontOfSize:(CGFloat)fontSize {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_labelFontOfSize] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // success
 - (id)hook_menuFontOfSize:(CGFloat)fontSize {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_menuFontOfSize] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // success
 - (id)hook_menuBarFontOfSize:(CGFloat)fontSize {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_menuBarFontOfSize] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // success
 - (id)hook_messageFontOfSize:(CGFloat)fontSize {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_messageFontOfSize] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // success
 - (id)hook_paletteFontOfSize:(CGFloat)fontSize {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_paletteFontOfSize] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // success
 - (id)hook_toolTipsFontOfSize:(CGFloat)fontSize {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_toolTipsFontOfSize] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // success
 - (id)hook_controlContentFontOfSize:(CGFloat)fontSize {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_controlContentFontOfSize] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // + (NSFont *)systemFontOfSize:(CGFloat)fontSize weight:(NSFontWeight)weight API_AVAILABLE(macos(10.11));
 // success
 - (id)hook_systemFontOfSize:(CGFloat)fontSize weight:(NSFontWeight)weight API_AVAILABLE(macos(10.11)) {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_systemFontOfSize_withWeight] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // success
 - (id)hook_userFontOfSize:(CGFloat)fontSize {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSFont hook_userFontOfSize] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 
 // success
-- (id)hook_fontWithSize:(CGFloat)size {
-    Class currentClass = [self class];
+- (id)hook_fontWithSize:(CGFloat)fontSize {
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSCTFont hook_fontWithSize] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:size];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: fontSize];
 }
 // success
 - (id)hook_fontForAppearance:(id)i {
@@ -254,53 +221,43 @@ SEL originalClassMethodSel;
     //[self logParents];
     //    NSLog(@"\nxxxxxxxx: %@", [i className]);
     NSCTFont *f = [self hook_fontForAppearance:i];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:f.pointSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: f.pointSize];
 }
 // success
 - (id)hook_screenFont:(id)i {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSCTFont hook_screenFont] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
     NSCTFont *f = [self hook_screenFont:i];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:f.pointSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: f.pointSize];
 }
 // success
 - (id)hook_verticalFont:(id)i {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSCTFont hook_verticalFont] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
     NSCTFont *f = [self hook_verticalFont:i];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:f.pointSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: f.pointSize];
 }
 // failed
 - (id)hook_fontDescriptor {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSCTFont hook_fontDescriptor] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
     NSCTFont *f = [self hook_fontDescriptor];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:f.pointSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: f.pointSize];
 }
 // success
 - (id)hook_displayName {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSCTFont hook_displayName] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
     NSCTFont *f = [self hook_displayName];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:f.pointSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: f.pointSize];
 }
 // success
 - (id)hook_fontName {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSCTFont hook_fontName] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
     NSCTFont *f = [self hook_fontName];
@@ -310,84 +267,82 @@ SEL originalClassMethodSel;
 }
 // success
 - (id)hook__similarFontWithName:(id)a {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSCTFont hook__similarFontWithName] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
     NSCTFont *f = [self hook__similarFontWithName:a];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:f.pointSize];
-    //NSLog(@"\nFinish~~\n");
-    return c;
+    return [self generateFont: f.pointSize];
 }
 
 
 // success
 - (void)hook_setFont:(NSFont*)nf {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉[hook_setFont] current class:%@\nNSFont class name:%@, font name:%@\n", NSStringFromClass(currentClass), [nf className], [nf fontName]);
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:nf.pointSize];
+    NSFont *c = [self generateFont: nf.pointSize];
     [self hook_setFont:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
 // success
 - (void)hook_setFont1:(NSFont*)nf {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉 current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:nf.pointSize];
+    NSFont *c = [self generateFont: nf.pointSize];
     [self hook_setFont1:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
 // success
 - (void)hook_setFont2:(NSFont*)nf {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉 current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:nf.pointSize];
+    NSFont *c = [self generateFont: nf.pointSize];
     [self hook_setFont2:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
 // success
 - (void)hook_setFont3:(NSFont*)nf {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉 current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:nf.pointSize];
+    NSFont *c = [self generateFont: nf.pointSize];
     [self hook_setFont3:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
 // success
 - (void)hook_setFont4:(NSFont*)nf {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉 current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:nf.pointSize];
+    NSFont *c = [self generateFont: nf.pointSize];
     [self hook_setFont4:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
 // success
 - (void)hook_setFont5:(NSFont*)nf {
-    Class currentClass = [self class];
+//    Class currentClass = [self class];
 //    NSLog(@"\n🎉 current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:nf.pointSize];
+    NSFont *c = [self generateFont: nf.pointSize];
     [self hook_setFont5:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
