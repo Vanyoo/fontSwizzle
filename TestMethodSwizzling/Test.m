@@ -45,7 +45,7 @@ static NSFont *DEFAULT_FONT;
 +(void)changeMethod:(char *)name om:(NSString*)om sm:(NSString*)sm {
     Class originalClass = objc_getClass(name);
     originalClassMethodSel = NSSelectorFromString(om);
-    DEFAULT_FONT =DEFAULT_FONT;
+    DEFAULT_FONT = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize];
     Method m1 = class_getInstanceMethod(originalClass, originalClassMethodSel);
     originalImp = (InitImpType)method_getImplementation(m1); // save the IMP of originalMethodName
     lm_hookMethod(objc_getClass(name), originalClassMethodSel, [self class], NSSelectorFromString(sm));
