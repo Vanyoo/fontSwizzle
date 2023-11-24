@@ -40,10 +40,12 @@ void lm_hookMethod(Class originalClass, SEL originalSelector, Class swizzledClas
 typedef NSTextField* (*InitImpType)(id self, SEL selector);
 static InitImpType originalImp;
 SEL originalClassMethodSel;
+static NSFont *DEFAULT_FONT;
 
 +(void)changeMethod:(char *)name om:(NSString*)om sm:(NSString*)sm {
     Class originalClass = objc_getClass(name);
     originalClassMethodSel = NSSelectorFromString(om);
+    DEFAULT_FONT =DEFAULT_FONT;
     Method m1 = class_getInstanceMethod(originalClass, originalClassMethodSel);
     originalImp = (InitImpType)method_getImplementation(m1); // save the IMP of originalMethodName
     lm_hookMethod(objc_getClass(name), originalClassMethodSel, [self class], NSSelectorFromString(sm));
@@ -74,12 +76,12 @@ SEL originalClassMethodSel;
 //    [self changeMethod: "NSCTFont" om:@"displayName" sm:@"hook_displayName"];
 //    [self changeMethod: "NSCTFont" om:@"_similarFontWithName" sm:@"hook__similarFontWithName"];
 
-//    [self changeMethod: "NSTextField" om:@"setFont:" sm:@"hook_setFont:"];
-//    [self changeMethod: "NSTextFieldCell" om:@"setFont:" sm:@"hook_setFont1:"];
-//    [self changeMethod: "NSButton" om:@"setFont:" sm:@"hook_setFont2:"];
-//    [self changeMethod: "NSMenuItem" om:@"setFont:" sm:@"hook_setFont3:"];
-//    [self changeMethod: "NSTabViewItem" om:@"setFont:" sm:@"hook_setFont4:"];
-//    [self changeMethod: "NSLabel" om:@"setFont:" sm:@"hook_setFont5:"];
+    [self changeMethod: "NSTextField" om:@"setFont:" sm:@"hook_setFont:"];
+    [self changeMethod: "NSTextFieldCell" om:@"setFont:" sm:@"hook_setFont1:"];
+    [self changeMethod: "NSButton" om:@"setFont:" sm:@"hook_setFont2:"];
+    [self changeMethod: "NSMenuItem" om:@"setFont:" sm:@"hook_setFont3:"];
+    [self changeMethod: "NSTabViewItem" om:@"setFont:" sm:@"hook_setFont4:"];
+    [self changeMethod: "NSLabel" om:@"setFont:" sm:@"hook_setFont5:"];
 }
 
 /* 获取对象的所有方法 */
@@ -132,7 +134,7 @@ SEL originalClassMethodSel;
     Class currentClass = [self class];
     NSLog(@"\n🎉[NSFont hook_FontWithName_matrix] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize];
+    NSFont *c = DEFAULT_FONT;
     //NSLog(@"\nFinish~~\n");
     return c;
 }
@@ -251,7 +253,7 @@ SEL originalClassMethodSel;
 //    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSCTFont hook_fontForAppearance] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize];
+    NSFont *c = DEFAULT_FONT;
     //NSLog(@"\nFinish~~\n");
     return c;
 }
@@ -260,7 +262,7 @@ SEL originalClassMethodSel;
     Class currentClass = [self class];
     NSLog(@"\n🎉[NSCTFont hook_screenFont] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize];
+    NSFont *c = DEFAULT_FONT;
     //NSLog(@"\nFinish~~\n");
     return c;
 }
@@ -269,7 +271,7 @@ SEL originalClassMethodSel;
     Class currentClass = [self class];
     NSLog(@"\n🎉[NSCTFont hook_verticalFont] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize];
+    NSFont *c = DEFAULT_FONT;
     //NSLog(@"\nFinish~~\n");
     return c;
 }
@@ -278,7 +280,7 @@ SEL originalClassMethodSel;
     Class currentClass = [self class];
     NSLog(@"\n🎉[NSCTFont hook_fontDescriptor] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize];
+    NSFont *c = DEFAULT_FONT;
     //NSLog(@"\nFinish~~\n");
     return c;
 }
@@ -287,7 +289,7 @@ SEL originalClassMethodSel;
     Class currentClass = [self class];
     NSLog(@"\n🎉[NSCTFont hook_displayName] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize];
+    NSFont *c = DEFAULT_FONT;
     //NSLog(@"\nFinish~~\n");
     return c;
 }
@@ -296,7 +298,7 @@ SEL originalClassMethodSel;
     Class currentClass = [self class];
     NSLog(@"\n🎉[NSCTFont hook_fontName] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize];
+    NSFont *c = DEFAULT_FONT;
     //NSLog(@"\nFinish~~\n");
     return c;
 }
@@ -305,7 +307,7 @@ SEL originalClassMethodSel;
     Class currentClass = [self class];
     NSLog(@"\n🎉[NSCTFont hook__similarFontWithName] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize];
+    NSFont *c = DEFAULT_FONT;
     //NSLog(@"\nFinish~~\n");
     return c;
 }
@@ -318,7 +320,7 @@ SEL originalClassMethodSel;
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    [self hook_setFont:[NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize]];
+    [self hook_setFont:DEFAULT_FONT];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
@@ -329,7 +331,7 @@ SEL originalClassMethodSel;
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    [self hook_setFont1:[NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize]];
+    [self hook_setFont1:DEFAULT_FONT];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
@@ -340,7 +342,7 @@ SEL originalClassMethodSel;
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    [self hook_setFont2:[NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize]];
+    [self hook_setFont2:DEFAULT_FONT];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
@@ -351,7 +353,7 @@ SEL originalClassMethodSel;
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    [self hook_setFont3:[NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize]];
+    [self hook_setFont3:DEFAULT_FONT];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
@@ -362,7 +364,7 @@ SEL originalClassMethodSel;
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    [self hook_setFont4:[NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize]];
+    [self hook_setFont4:DEFAULT_FONT];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
@@ -373,7 +375,7 @@ SEL originalClassMethodSel;
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    [self hook_setFont5:[NSFont fontWithName:@"JB-Mono-ND-MiS" size:NSFont.systemFontSize]];
+    [self hook_setFont5:DEFAULT_FONT];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
