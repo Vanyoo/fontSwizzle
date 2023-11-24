@@ -253,7 +253,9 @@ static NSFont *DEFAULT_FONT;
 //    Class currentClass = [self class];
 //    NSLog(@"\n🎉[NSCTFont hook_fontForAppearance] current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
-    NSFont *c = DEFAULT_FONT;
+    //    NSLog(@"\nxxxxxxxx: %@", [i className]);
+    NSCTFont *f = [self hook_fontForAppearance:i];
+    NSFont *c = [NSFont fontWithName:@"JB-Mono-ND-MiS" size:f.pointSize];
     //NSLog(@"\nFinish~~\n");
     return c;
 }
