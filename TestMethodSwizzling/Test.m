@@ -117,7 +117,8 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
 }
 
 - (NSFont*)generateFont:(const CGFloat)fontSize originalFont:(NSFont *)originalFont {
-    if (originalFont != NULL && [originalFont.fontName isEqualToString:(AppleColorEmoji)]) {
+    NSLog(@"++++Original font name: %@", originalFont.fontName);
+    if (originalFont != NULL && [originalFont.fontName containsString:(AppleColorEmoji)]) {
         return originalFont;
     }
     return [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
