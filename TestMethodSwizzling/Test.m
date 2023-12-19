@@ -50,6 +50,7 @@ typedef NSTextField* (*InitImpType)(id self, SEL selector);
 static InitImpType originalImp;
 SEL originalClassMethodSel;
 NSString *AppleColorEmoji = @"AppleColorEmoji";
+NSTableView *table;
 
 +(void)changeMethod:(char *)name om:(NSString*)om sm:(NSString*)sm {
     Class originalClass = objc_getClass(name);
@@ -96,8 +97,20 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
 //    [self changeMethod:"MMTextMessageCellView" om:@"setTextField:" sm:@"hook_MMTextMessageCellViewSetTextField:"];
     
 //    [self changeMethod: "NSTextField" om:@"init" sm:@"hook_NSTextFieldInit"];
-    [self changeMethod: "NSAttributedString" om:@"initWithString:" sm:@"custom_initWithString:"];
+//    [self changeMethod: "NSAttributedString" om:@"initWithString:" sm:@"custom_initWithString:"];
+//    [self changeMethod:"MMTimeStampCellView" om:@"initWithFrame:" sm:@"hook_MMTimeStampCellViewinitWithFrame:"];
+    [self changeMethod:"NSView" om:@"addSubview:" sm:@"hook_NSViewaddSubview:"];
+    
+    [self changeMethod:"NSTableView" om:@"initWithFrame:" sm:@"hook_NSTableVIewinitWithFrame:"];
+}
 
+// not trrigered
+- (NSTableView *)hook_NSTableVIewinitWithFrame:(NSRect)frameRect {
+    NSLog(@"=====hook_NSTableVIew-initWithFrame start======\n");
+    table = self;
+    NSTableView * c = [self hook_NSTableVIewinitWithFrame:frameRect];
+    NSLog(@"=====hook_NSTableVIew-initWithFrame end======\n");
+    return c;
 }
 
 - (NSAttributedString *)custom_initWithString:(NSString *)str {
@@ -111,8 +124,8 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
 }
 
 
-- (void) changeMMTextMessageCellViewNSTextFieldAttribute:(NSString *)propertyName obj:(MMTextMessageCellView *)view {
-    NSLog(@"=====changeMMTextMessageCellViewNSTextFieldAttribute start======\n");
+- (void) changeNSTextFieldAttribute:(NSString *)propertyName obj:(MMMessageCellView *)view {
+    NSLog(@"=====changeNSTextFieldAttribute start======\n");
     // 获取属性的值
     NSTextField *propertyValue = (NSTextField *)[view valueForKey:propertyName];
     // 获取字体
@@ -125,22 +138,19 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
     NSLog(@"Font Size: %.2f", font.pointSize);
     NSFont *x = [view generateFont:font.pointSize originalFont:font];
     [propertyValue setFont:x];
-    NSTextField *f = [[NSTextField alloc] init];
-    [f setFont:x];
-    // 确保 textStorage 的属性设置没有覆盖字体
-    [view setTextField: f];
     font = propertyValue.font;
-    
+
+
     // 打印字体信息
     NSLog(@"+Font: %@", font);
     NSLog(@"+Font Family: %@", font.familyName);
     NSLog(@"+Font Name: %@", font.fontName);
     NSLog(@"+Font Size: %.2f", font.pointSize);
-    NSLog(@"=====changeMMTextMessageCellViewNSTextFieldAttribute end======\n");
+    NSLog(@"=====changeNSTextFieldAttribute end======\n");
 }
 
-- (void) changeMMTextMessageCellViewNSTextViewAttribute:(NSString *)propertyName obj:(MMTextMessageCellView *)view {
-    NSLog(@"=====changeMMTextMessageCellViewNSTextViewAttribute start======\n");
+- (void) changeNSTextViewAttribute:(NSString *)propertyName obj:(MMMessageCellView *)view {
+    NSLog(@"=====changeNSTextViewAttribute start======\n");
     // 获取属性的值
     NSTextView *propertyValue = (NSTextView *)[view valueForKey:propertyName];
     // 获取字体
@@ -153,8 +163,13 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
     NSLog(@"Font Size: %.2f", font.pointSize);
     NSFont *x = [view generateFont:font.pointSize originalFont:font];
     [propertyValue setFont:x];
+    [propertyValue.textStorage setFont:x];
+    NSTextField *f = [[NSTextField alloc] init];
+    [f setFont:x];
+    [view setTextField: f];
     // 确保 textStorage 的属性设置没有覆盖字体
     [propertyValue.textStorage setAttributedString:[[NSAttributedString alloc] initWithString:[x fontName]]];
+    NSLog(@"xxxxx %@ \n", propertyValue.textStorage);
     font = [propertyValue font];
     NSLog(@"xxxxx %@ \n", x);
     
@@ -163,7 +178,54 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
     NSLog(@"+Font Family: %@", font.familyName);
     NSLog(@"+Font Name: %@", font.fontName);
     NSLog(@"+Font Size: %.2f", font.pointSize);
-    NSLog(@"=====changeMMTextMessageCellViewNSTextViewAttribute end======\n");
+    NSLog(@"=====changeNSTextViewAttribute end======\n");
+}
+
+// WeChat work
+- (void)hook_NSViewaddSubview:(NSView *)view {
+    NSLog(@"++hook_NSViewaddSubview+++ view:%@.\n", view);
+    if ([[view className] isEqualToString:@"NSTextField"] || [[view className] isEqualToString:@"MMTextField"]) {
+        NSTextField *x = (NSTextField *)view;
+        [x setFont:[self generateFont:x.font.pointSize originalFont:x.font]];
+        NSLog(@"The Font is:%@", ((NSTextField *)view).font);
+        [x display];
+        [table reloadData];
+    }
+    [self hook_NSViewaddSubview:view];
+}
+
+
+// WeChat work
+- (id)hook_MMTimeStampCellViewinitWithFrame:(struct CGRect)arg1 {
+    NSLog(@"++hook_MMTimeStampCellViewinitWithFrame+++ This is wechat method.\n");
+    MMTimeStampCellView *m = [self hook_MMTimeStampCellViewinitWithFrame:arg1];
+    [m changeNSTextFieldAttribute:@"_timeStampTextField" obj:m];
+    NSTextField *f = [[NSTextField alloc] init];
+    [f setFont:[self generateFont:NSFont.systemFontSize originalFont:NULL]];
+    [m setTextField: f];
+    NSLog(@"...........Font:%@ | _timeStampTextField.font:%@\n", m.textField, m.timeStampTextField.font);
+//    [m changeNSTextFieldAttribute:@"waitingProgressLabel" obj:m]; crash
+    
+    
+    [m setNeedsDisplay:YES];
+    [m display];
+    return m;
+}
+
+// WeChat work
+- (id)hook_MMTextMessageCellViewinitWithFrame:(struct CGRect)arg1 {
+    NSLog(@"++hook_MMTextMessageCellViewinitWithFrame+++ This is wechat method.\n");
+    MMTextMessageCellView *m = [self hook_MMTextMessageCellViewinitWithFrame:arg1];
+    [m changeNSTextFieldAttribute:@"solitaireTipsTextField" obj:m];
+    [m changeNSTextFieldAttribute:@"groupChatNickNameLabel" obj:m];
+    [m changeNSTextFieldAttribute:@"msgCreatetimeLabel" obj:m];
+//    [m changeNSTextFieldAttribute:@"waitingProgressLabel" obj:m]; crash
+    
+    [m changeNSTextViewAttribute:@"translationBrandTextView" obj:m];
+    
+    NSLog(@"&Font :%@", m.translationBrandTextView.font);
+
+    return m;
 }
 
 // NSTextField init, Error, not work

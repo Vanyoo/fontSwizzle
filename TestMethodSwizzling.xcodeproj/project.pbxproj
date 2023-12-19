@@ -43,6 +43,7 @@
 		21DD14A62B3049BF00DEB339 /* ISolitaireMgrExt-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISolitaireMgrExt-Protocol.h"; sourceTree = "<group>"; };
 		21DD14A72B3049DA00DEB339 /* MMCTTextViewDelegate-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MMCTTextViewDelegate-Protocol.h"; sourceTree = "<group>"; };
 		21DD14A82B31546F00DEB339 /* MMTimeStampCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMTimeStampCellView.h; sourceTree = "<group>"; };
+		21FD78B42B31DEC500AF76D3 /* MMTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMTextField.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +100,7 @@
 				21DD14A62B3049BF00DEB339 /* ISolitaireMgrExt-Protocol.h */,
 				21DD14A72B3049DA00DEB339 /* MMCTTextViewDelegate-Protocol.h */,
 				21DD14A82B31546F00DEB339 /* MMTimeStampCellView.h */,
+				21FD78B42B31DEC500AF76D3 /* MMTextField.h */,
 			);
 			path = TestMethodSwizzling;
 			sourceTree = "<group>";
@@ -173,6 +175,7 @@
 				TargetAttributes = {
 					21D4985C2B0B4EA500890EDC = {
 						CreatedOnToolsVersion = 13.2.1;
+						LastSwiftMigration = 1420;
 					};
 					21D498662B0B4EA500890EDC = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -364,6 +367,7 @@
 		21D498722B0B4EA500890EDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -385,12 +389,15 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		21D498732B0B4EA500890EDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -412,6 +419,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
