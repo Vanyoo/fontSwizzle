@@ -7,9 +7,12 @@
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 #import "TestMethodSwizzling.h"
 #import "NSCTFont.h"
 #import "objc/runtime.h"
+#import "MMTextMessageCellView.h"
+#import "MMTimeStampCellView.h"
 
 #ifdef DEBUG
     #define NSLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
@@ -58,36 +61,139 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
 }
 
 + (void)hookThunder{
-    [self changeMethod: "NSFont" om:@"fontWithName:size:" sm:@"hook_fontWithName:size:"];
-    [self changeMethod: "NSFont" om:@"fontWithName:matrix:" sm:@"hook_fontWithName:matrix:"];
-    [self changeMethod: "NSFont" om:@"fontWithDescriptor:size:" sm:@"hook_fontWithDescriptor:size:"];
-    [self changeMethod: "NSFont" om:@"systemFontOfSize:" sm:@"hook_systemFontOfSize:"];
-    [self changeMethod: "NSFont" om:@"labelFontOfSize:" sm:@"hook_labelFontOfSize:"];
-    [self changeMethod: "NSFont" om:@"menuFontOfSize:" sm:@"hook_menuFontOfSize:"];
-    [self changeMethod: "NSFont" om:@"menuBarFontOfSize:" sm:@"hook_menuBarFontOfSize:"];
-    [self changeMethod: "NSFont" om:@"messageFontOfSize:" sm:@"hook_messageFontOfSize:"];
-    [self changeMethod: "NSFont" om:@"paletteFontOfSize:" sm:@"hook_paletteFontOfSize:"];
-    [self changeMethod: "NSFont" om:@"toolTipsFontOfSize:" sm:@"hook_toolTipsFontOfSize:"];
-    [self changeMethod: "NSFont" om:@"controlContentFontOfSize:" sm:@"hook_controlContentFontOfSize:"];
-    [self changeMethod: "NSFont" om:@"systemFontOfSize:weight:" sm:@"hook_systemFontOfSize:weight:"];
-    [self changeMethod: "NSFont" om:@"userFontOfSize:" sm:@"hook_userFontOfSize:"];
+//    [self changeMethod: "NSFont" om:@"fontWithName:size:" sm:@"hook_fontWithName:size:"];
+//    [self changeMethod: "NSFont" om:@"fontWithName:matrix:" sm:@"hook_fontWithName:matrix:"];
+//    [self changeMethod: "NSFont" om:@"fontWithDescriptor:size:" sm:@"hook_fontWithDescriptor:size:"];
+//    [self changeMethod: "NSFont" om:@"systemFontOfSize:" sm:@"hook_systemFontOfSize:"];
+//    [self changeMethod: "NSFont" om:@"labelFontOfSize:" sm:@"hook_labelFontOfSize:"];
+//    [self changeMethod: "NSFont" om:@"menuFontOfSize:" sm:@"hook_menuFontOfSize:"];
+//    [self changeMethod: "NSFont" om:@"menuBarFontOfSize:" sm:@"hook_menuBarFontOfSize:"];
+//    [self changeMethod: "NSFont" om:@"messageFontOfSize:" sm:@"hook_messageFontOfSize:"];
+//    [self changeMethod: "NSFont" om:@"paletteFontOfSize:" sm:@"hook_paletteFontOfSize:"];
+//    [self changeMethod: "NSFont" om:@"toolTipsFontOfSize:" sm:@"hook_toolTipsFontOfSize:"];
+//    [self changeMethod: "NSFont" om:@"controlContentFontOfSize:" sm:@"hook_controlContentFontOfSize:"];
+//    [self changeMethod: "NSFont" om:@"systemFontOfSize:weight:" sm:@"hook_systemFontOfSize:weight:"];
+//    [self changeMethod: "NSFont" om:@"userFontOfSize:" sm:@"hook_userFontOfSize:"];
 
-    [self changeMethod: "NSCTFont" om:@"fontWithSize:" sm:@"hook_fontWithSize:"];
-    [self changeMethod: "NSCTFont" om:@"fontForAppearance:" sm:@"hook_fontForAppearance:"];
-    [self changeMethod: "NSCTFont" om:@"screenFont:" sm:@"hook_screenFont:"];
-    [self changeMethod: "NSCTFont" om:@"verticalFont:" sm:@"hook_verticalFont:"];
+//    [self changeMethod: "NSCTFont" om:@"fontWithSize:" sm:@"hook_fontWithSize:"];
+//    [self changeMethod: "NSCTFont" om:@"fontForAppearance:" sm:@"hook_fontForAppearance:"];
+//    [self changeMethod: "NSCTFont" om:@"screenFont:" sm:@"hook_screenFont:"];
+//    [self changeMethod: "NSCTFont" om:@"verticalFont:" sm:@"hook_verticalFont:"];
 //    [self changeMethod: "NSCTFont" om:@"fontDescriptor" sm:@"hook_fontDescriptor"]; 返回的应该不是NSFont对象，所以会报错
 //    [self changeMethod: "NSCTFont" om:@"fontName" sm:@"hook_fontName"];
 //    [self changeMethod: "NSCTFont" om:@"displayName" sm:@"hook_displayName"];
 //    [self changeMethod: "NSCTFont" om:@"_similarFontWithName" sm:@"hook__similarFontWithName"];
 
-    [self changeMethod: "NSTextField" om:@"setFont:" sm:@"hook_setFont:"];
-    [self changeMethod: "NSTextFieldCell" om:@"setFont:" sm:@"hook_setFont1:"];
-    [self changeMethod: "NSButton" om:@"setFont:" sm:@"hook_setFont2:"];
-    [self changeMethod: "NSMenuItem" om:@"setFont:" sm:@"hook_setFont3:"];
-    [self changeMethod: "NSTabViewItem" om:@"setFont:" sm:@"hook_setFont4:"];
-    [self changeMethod: "NSLabel" om:@"setFont:" sm:@"hook_setFont5:"];
+//    [self changeMethod: "NSTextField" om:@"setFont:" sm:@"hook_setFont:"];
+//    [self changeMethod: "NSTextFieldCell" om:@"setFont:" sm:@"hook_setFont1:"];
+//    [self changeMethod: "NSButton" om:@"setFont:" sm:@"hook_setFont2:"];
+//    [self changeMethod: "NSMenuItem" om:@"setFont:" sm:@"hook_setFont3:"];
+//    [self changeMethod: "NSTabViewItem" om:@"setFont:" sm:@"hook_setFont4:"];
+//    [self changeMethod: "NSLabel" om:@"setFont:" sm:@"hook_setFont5:"];
+    
+    // WeChat
+//    [self changeMethod:"MMTextMessageCellView" om:@"init" sm:@"hook_MMTextMessageCellViewInit"];
+//    [self changeMethod:"MMTextMessageCellView" om:@"setTextField:" sm:@"hook_MMTextMessageCellViewSetTextField:"];
+    
+//    [self changeMethod: "NSTextField" om:@"init" sm:@"hook_NSTextFieldInit"];
+    [self changeMethod: "NSAttributedString" om:@"initWithString:" sm:@"custom_initWithString:"];
+
 }
+
+- (NSAttributedString *)custom_initWithString:(NSString *)str {
+    NSLog(@"=====NSAttributedString-custom_initWithString start======\n");
+    // 修改字体设置
+    NSDictionary *attributes = @{NSFontAttributeName: [self generateFont:NSFont.systemFontSize originalFont:NULL]};
+    NSAttributedString *modifiedString = [self custom_initWithString:str];
+    NSAttributedString *customAttributedString = [[NSAttributedString alloc] initWithString:modifiedString.string attributes:attributes];
+    NSLog(@"=====NSAttributedString-custom_initWithString end======\n");
+    return customAttributedString;
+}
+
+
+- (void) changeMMTextMessageCellViewNSTextFieldAttribute:(NSString *)propertyName obj:(MMTextMessageCellView *)view {
+    NSLog(@"=====changeMMTextMessageCellViewNSTextFieldAttribute start======\n");
+    // 获取属性的值
+    NSTextField *propertyValue = (NSTextField *)[view valueForKey:propertyName];
+    // 获取字体
+    NSFont *font = propertyValue.font;
+
+    // 打印字体信息
+    NSLog(@"Font: %@", font);
+    NSLog(@"Font Family: %@", font.familyName);
+    NSLog(@"Font Name: %@", font.fontName);
+    NSLog(@"Font Size: %.2f", font.pointSize);
+    NSFont *x = [view generateFont:font.pointSize originalFont:font];
+    [propertyValue setFont:x];
+    NSTextField *f = [[NSTextField alloc] init];
+    [f setFont:x];
+    // 确保 textStorage 的属性设置没有覆盖字体
+    [view setTextField: f];
+    font = propertyValue.font;
+    
+    // 打印字体信息
+    NSLog(@"+Font: %@", font);
+    NSLog(@"+Font Family: %@", font.familyName);
+    NSLog(@"+Font Name: %@", font.fontName);
+    NSLog(@"+Font Size: %.2f", font.pointSize);
+    NSLog(@"=====changeMMTextMessageCellViewNSTextFieldAttribute end======\n");
+}
+
+- (void) changeMMTextMessageCellViewNSTextViewAttribute:(NSString *)propertyName obj:(MMTextMessageCellView *)view {
+    NSLog(@"=====changeMMTextMessageCellViewNSTextViewAttribute start======\n");
+    // 获取属性的值
+    NSTextView *propertyValue = (NSTextView *)[view valueForKey:propertyName];
+    // 获取字体
+    NSFont *font = propertyValue.font;
+
+    // 打印字体信息
+    NSLog(@"Font: %@", font);
+    NSLog(@"Font Family: %@", font.familyName);
+    NSLog(@"Font Name: %@", font.fontName);
+    NSLog(@"Font Size: %.2f", font.pointSize);
+    NSFont *x = [view generateFont:font.pointSize originalFont:font];
+    [propertyValue setFont:x];
+    // 确保 textStorage 的属性设置没有覆盖字体
+    [propertyValue.textStorage setAttributedString:[[NSAttributedString alloc] initWithString:[x fontName]]];
+    font = [propertyValue font];
+    NSLog(@"xxxxx %@ \n", x);
+    
+    // 打印字体信息
+    NSLog(@"+Font: %@", font);
+    NSLog(@"+Font Family: %@", font.familyName);
+    NSLog(@"+Font Name: %@", font.fontName);
+    NSLog(@"+Font Size: %.2f", font.pointSize);
+    NSLog(@"=====changeMMTextMessageCellViewNSTextViewAttribute end======\n");
+}
+
+// NSTextField init, Error, not work
+- (NSTextField *)hook_NSTextFieldInit {
+    NSTextField *otf = [self hook_NSTextFieldInit];
+    [otf setFont:[self generateFont:otf.font.pointSize originalFont:otf.font]];
+    return otf;
+}
+
+// WeChat, work
+- (id)hook_MMTextMessageCellViewInit {
+    NSLog(@"++hook_MMTextMessageCellViewInit+++ This is wechat method, Current Class : %@\n", [self className]);
+    if (![[self className] isEqualToString:@"NSTextField"]) {
+        NSLog(@"++hook_MMTextMessageCellViewInit+++ Special class process : %@\n", [self className]);
+        NSTextField * tf = [[NSTextField alloc] init];
+        [tf setFont:[self generateFont:NSFont.systemFontSize originalFont:NULL]];
+    }
+    return [self hook_MMTextMessageCellViewInit];
+}
+
+// WeChat,work
+- (void)hook_MMTextMessageCellViewSetTextField:(NSTextField*)otf {
+    NSLog(@"++hook_MMTextMessageCellViewSetTextField+++ This is wechat method, Current Class : %@\n", [self className]);
+    if ([[self className] isEqualToString:@"MMTextMessageCellView"]) {
+        NSLog(@"++hook_MMTextMessageCellViewSetTextField+++ Special class process : %@\n", [self className]);
+        [otf setFont:[self generateFont:otf.font.pointSize originalFont:otf.font]];
+    }
+    return [self hook_MMTextMessageCellViewSetTextField:otf];
+}
+
 
 /* 获取对象的所有方法 */
 -(NSArray *)getAllMethods: (Class) c {
@@ -121,6 +227,7 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
     if (originalFont != NULL && [originalFont.fontName containsString:(AppleColorEmoji)]) {
         return originalFont;
     }
+    NSLog(@"++++Using JB font\n");
     return [NSFont fontWithName:@"JB-Mono-ND-MiS" size:fontSize];
 }
 

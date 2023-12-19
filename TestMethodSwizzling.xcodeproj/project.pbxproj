@@ -33,6 +33,16 @@
 		21D4986C2B0B4EA500890EDC /* TestMethodSwizzlingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestMethodSwizzlingTests.m; sourceTree = "<group>"; };
 		21D498772B0B4EE200890EDC /* Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
 		21DD14952B0F12E000DEB339 /* NSCTFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSCTFont.h; sourceTree = "<group>"; };
+		21DD14972B301F7B00DEB339 /* MMTextMessageCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMTextMessageCellView.h; sourceTree = "<group>"; };
+		21DD14982B3020A700DEB339 /* MMMessageCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMMessageCellView.h; sourceTree = "<group>"; };
+		21DD149B2B3046E900DEB339 /* CAAnimationDelegate-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CAAnimationDelegate-Protocol.h"; sourceTree = "<group>"; };
+		21DD149C2B30471B00DEB339 /* IContactMgrExt-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IContactMgrExt-Protocol.h"; sourceTree = "<group>"; };
+		21DD149D2B30474C00DEB339 /* IGroupMgrExt-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IGroupMgrExt-Protocol.h"; sourceTree = "<group>"; };
+		21DD149E2B30476900DEB339 /* MMAutoDownloadProtocol-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MMAutoDownloadProtocol-Protocol.h"; sourceTree = "<group>"; };
+		21DD149F2B3047A600DEB339 /* MMRevokeMsgServiceExt-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MMRevokeMsgServiceExt-Protocol.h"; sourceTree = "<group>"; };
+		21DD14A62B3049BF00DEB339 /* ISolitaireMgrExt-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISolitaireMgrExt-Protocol.h"; sourceTree = "<group>"; };
+		21DD14A72B3049DA00DEB339 /* MMCTTextViewDelegate-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MMCTTextViewDelegate-Protocol.h"; sourceTree = "<group>"; };
+		21DD14A82B31546F00DEB339 /* MMTimeStampCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMTimeStampCellView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +67,7 @@
 		21D498532B0B4EA500890EDC = {
 			isa = PBXGroup;
 			children = (
+				21DD149C2B30471B00DEB339 /* IContactMgrExt-Protocol.h */,
 				21D4985F2B0B4EA500890EDC /* TestMethodSwizzling */,
 				21D4986B2B0B4EA500890EDC /* TestMethodSwizzlingTests */,
 				21D4985E2B0B4EA500890EDC /* Products */,
@@ -79,6 +90,15 @@
 				21D498612B0B4EA500890EDC /* TestMethodSwizzling.docc */,
 				21D498772B0B4EE200890EDC /* Test.m */,
 				21DD14952B0F12E000DEB339 /* NSCTFont.h */,
+				21DD14972B301F7B00DEB339 /* MMTextMessageCellView.h */,
+				21DD14982B3020A700DEB339 /* MMMessageCellView.h */,
+				21DD149B2B3046E900DEB339 /* CAAnimationDelegate-Protocol.h */,
+				21DD149D2B30474C00DEB339 /* IGroupMgrExt-Protocol.h */,
+				21DD149E2B30476900DEB339 /* MMAutoDownloadProtocol-Protocol.h */,
+				21DD149F2B3047A600DEB339 /* MMRevokeMsgServiceExt-Protocol.h */,
+				21DD14A62B3049BF00DEB339 /* ISolitaireMgrExt-Protocol.h */,
+				21DD14A72B3049DA00DEB339 /* MMCTTextViewDelegate-Protocol.h */,
+				21DD14A82B31546F00DEB339 /* MMTimeStampCellView.h */,
 			);
 			path = TestMethodSwizzling;
 			sourceTree = "<group>";
@@ -351,7 +371,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -378,7 +398,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
