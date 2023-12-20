@@ -77,7 +77,7 @@ NSTableView *table;
 //    [self changeMethod: "NSFont" om:@"userFontOfSize:" sm:@"hook_userFontOfSize:"];
 
 //    [self changeMethod: "NSCTFont" om:@"fontWithSize:" sm:@"hook_fontWithSize:"];
-//    [self changeMethod: "NSCTFont" om:@"fontForAppearance:" sm:@"hook_fontForAppearance:"];
+    [self changeMethod: "NSCTFont" om:@"fontForAppearance:" sm:@"hook_fontForAppearance:"];
 //    [self changeMethod: "NSCTFont" om:@"screenFont:" sm:@"hook_screenFont:"];
 //    [self changeMethod: "NSCTFont" om:@"verticalFont:" sm:@"hook_verticalFont:"];
 //    [self changeMethod: "NSCTFont" om:@"fontDescriptor" sm:@"hook_fontDescriptor"]; 返回的应该不是NSFont对象，所以会报错
@@ -85,12 +85,29 @@ NSTableView *table;
 //    [self changeMethod: "NSCTFont" om:@"displayName" sm:@"hook_displayName"];
 //    [self changeMethod: "NSCTFont" om:@"_similarFontWithName" sm:@"hook__similarFontWithName"];
 
-//    [self changeMethod: "NSTextField" om:@"setFont:" sm:@"hook_setFont:"];
-//    [self changeMethod: "NSTextFieldCell" om:@"setFont:" sm:@"hook_setFont1:"];
-//    [self changeMethod: "NSButton" om:@"setFont:" sm:@"hook_setFont2:"];
-//    [self changeMethod: "NSMenuItem" om:@"setFont:" sm:@"hook_setFont3:"];
-//    [self changeMethod: "NSTabViewItem" om:@"setFont:" sm:@"hook_setFont4:"];
-//    [self changeMethod: "NSLabel" om:@"setFont:" sm:@"hook_setFont5:"];
+//    [self changeMethod: "NSTextField" om:@"setFont:" sm:@"hook_NSTextField_setFont:"];
+//    [self changeMethod: "NSTextFieldCell" om:@"setFont:" sm:@"hook_NSTextFieldCell_setFont:"];
+//    [self changeMethod: "NSButton" om:@"setFont:" sm:@"hook_NSButton_setFont:"];
+//    [self changeMethod: "NSMenuItem" om:@"setFont:" sm:@"hook_NSMenuItem_setFont:"];
+//    [self changeMethod: "NSTabViewItem" om:@"setFont:" sm:@"hook_NSTabViewItem_setFont:"];
+//    [self changeMethod: "NSLabel" om:@"setFont:" sm:@"hook_NSLabel_setFont:"];
+//
+//    [self changeMethod: "MMAvatarImageView" om:@"setFont:" sm:@"hook_MMAvatarImageView_setFont:"];
+//    [self changeMethod: "MMButton" om:@"setFont:" sm:@"hook_MMButton_setFont:"];
+//    [self changeMethod: "MMMessageUnreadTipsButton" om:@"setFont:" sm:@"hook_MMMessageUnreadTipsButton_setFont:"];
+//    [self changeMethod: "MMOutlineButton" om:@"setFont:" sm:@"hook_MMOutlineButton_setFont:"];
+//    [self changeMethod: "MMTextField" om:@"setFont:" sm:@"hook_MMTextField_setFont:"];
+//    [self changeMethod: "NSButton" om:@"setFont:" sm:@"hook_NSButton_setFont:"];
+//    [self changeMethod: "NSButtonCell" om:@"setFont:" sm:@"hook_NSButtonCell_setFont:"];
+//    [self changeMethod: "NSImageCell" om:@"setFont:" sm:@"hook_NSImageCell_setFont:"];
+//    [self changeMethod: "NSImageView" om:@"setFont:" sm:@"hook_NSImageView_setFont:"];
+//    [self changeMethod: "NSMenu" om:@"setFont:" sm:@"hook_NSMenu_setFont:"];
+//    [self changeMethod: "NSScroller" om:@"setFont:" sm:@"hook_NSScroller_setFont:"];
+//    [self changeMethod: "NSTextView" om:@"setFont:" sm:@"hook_NSTextView_setFont:"];
+//    [self changeMethod: "RFOverlayScroller" om:@"setFont:" sm:@"hook_RFOverlayScroller_setFont:"];
+//    [self changeMethod: "SVGButton" om:@"setFont:" sm:@"hook_SVGButton_setFont:"];
+
+
     
     // WeChat
 //    [self changeMethod:"MMTextMessageCellView" om:@"init" sm:@"hook_MMTextMessageCellViewInit"];
@@ -99,15 +116,103 @@ NSTableView *table;
 //    [self changeMethod: "NSTextField" om:@"init" sm:@"hook_NSTextFieldInit"];
 //    [self changeMethod: "NSAttributedString" om:@"initWithString:" sm:@"custom_initWithString:"];
 //    [self changeMethod:"MMTimeStampCellView" om:@"initWithFrame:" sm:@"hook_MMTimeStampCellViewinitWithFrame:"];
-    [self changeMethod:"NSView" om:@"addSubview:" sm:@"hook_NSViewaddSubview:"];
+//    [self changeMethod:"NSView" om:@"addSubview:" sm:@"hook_NSViewaddSubview:"];
+//
+//    [self changeMethod:"NSTableView" om:@"initWithFrame:" sm:@"hook_NSTableVIewinitWithFrame:"];
     
-    [self changeMethod:"NSTableView" om:@"initWithFrame:" sm:@"hook_NSTableVIewinitWithFrame:"];
+//    [self changeMethod:"MMTextMessageCellView" om:@"awakeFromNib" sm:@"hook_MMTextMessageCellView_awakeFromNib"];
+}
+
+/**
+ 获取指定类的属性
+
+ @param cls 被获取属性的类
+ @return 属性名称 [NSString *]
+ */
+-(NSArray *)getClassProperty:(Class)cls {
+
+    if (!cls) return @[];
+
+    NSMutableArray * all_p = [NSMutableArray array];
+
+    unsigned int a;
+
+    objc_property_t * result = class_copyPropertyList(cls, &a);
+
+    for (unsigned int i = 0; i < a; i++) {
+        objc_property_t o_t =  result[i];
+        [all_p addObject:[NSString stringWithFormat:@"%s", property_getName(o_t)]];
+    }
+
+    free(result);
+
+    return [all_p copy];
+}
+
+BOOL flag = NO;
+
+/**
+ 获取指定类（以及其父类）的所有属性
+
+ @param cls 被获取属性的类
+ @param until_class 当查找到此类时会停止查找，当设置为 nil 时，默认采用 [NSObject class]
+ @return 属性名称 [NSString *]
+ */
+-(NSArray *)getAllProperty:(Class)cls until_class:(Class)until_class {
+//    if ([[cls className] isEqualToString:@"NSTextFieldCell"]) {
+//        flag = YES;
+//        NSLog(@"+++++++++++NSTextFieldCell start++++++++++\n");
+//    }
+//    if (flag == YES) {
+//        NSLog(@"Current class:%@\n", [cls className]);
+//    }
+    Class stop_class = until_class ?: [NSObject class];
+
+    if (cls == stop_class) return @[];
+
+    NSMutableArray * all_p = [NSMutableArray array];
+
+    [all_p addObjectsFromArray:[self getClassProperty:cls]];
+
+    if (class_getSuperclass(cls) == stop_class) {
+        return [all_p copy];
+    } else {
+        [all_p addObjectsFromArray:[self getAllProperty:[cls superclass] until_class:stop_class]];
+    }
+
+//    if ([[cls className] isEqualToString:@"NSTextFieldCell"]) {
+//        NSLog(@"+++++++++++NSTextFieldCell end++++++++++\n");
+//        flag = NO;
+////        exit(1);
+//    }
+    return [all_p copy];
+}
+
+- (BOOL)hasProperty:(id)c propertyName:(NSString *)name {
+    NSArray *names = [self getAllProperty:[c class] until_class:nil];
+    if ([names containsObject:name]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (void)hook_MMTextMessageCellView_awakeFromNib {
+    NSLog(@"=====MMTextMessageCellView-awakeFromNib start|class name:%@======\n", [self className]);
+    if ([self hasProperty:self propertyName:@"font"]) {
+        NSLog(@"OK get in");
+        // 使用 KVC 设置属性值
+        NSFont *f = (NSFont*)[self valueForKey:@"font"];
+        [self setValue:[self generateFont:f.pointSize originalFont:f] forKey:@"font"];
+    }
+    [self hook_MMTextMessageCellView_awakeFromNib];
+    NSLog(@"=====MMTextMessageCellView-awakeFromNib end======\n");
 }
 
 // not trrigered
 - (NSTableView *)hook_NSTableVIewinitWithFrame:(NSRect)frameRect {
     NSLog(@"=====hook_NSTableVIew-initWithFrame start======\n");
-    table = self;
+    
     NSTableView * c = [self hook_NSTableVIewinitWithFrame:frameRect];
     NSLog(@"=====hook_NSTableVIew-initWithFrame end======\n");
     return c;
@@ -454,78 +559,151 @@ NSTableView *table;
 
 
 // success
-- (void)hook_setFont:(NSFont*)nf {
+- (void)hook_NSTextField_setFont:(NSFont*)nf {
 //    Class currentClass = [self class];
-//    NSLog(@"\n🎉[hook_setFont] current class:%@\nNSFont class name:%@, font name:%@\n", NSStringFromClass(currentClass), [nf className], [nf fontName]);
+//    NSLog(@"\n🎉[hook_NSTextField_setFont] current class:%@\nNSFont class name:%@, font name:%@\n", NSStringFromClass(currentClass), [nf className], [nf fontName]);
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
     NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
-    [self hook_setFont:c];
+    [self hook_NSTextField_setFont:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
 // success
-- (void)hook_setFont1:(NSFont*)nf {
+- (void)hook_NSTextFieldCell_setFont:(NSFont*)nf {
 //    Class currentClass = [self class];
 //    NSLog(@"\n🎉 current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
     NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
-    [self hook_setFont1:c];
+    [self hook_NSTextFieldCell_setFont:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
 // success
-- (void)hook_setFont2:(NSFont*)nf {
+- (void)hook_NSButton_setFont:(NSFont*)nf {
 //    Class currentClass = [self class];
 //    NSLog(@"\n🎉 current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
     NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
-    [self hook_setFont2:c];
+    [self hook_NSButton_setFont:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
 // success
-- (void)hook_setFont3:(NSFont*)nf {
+- (void)hook_NSMenuItem_setFont:(NSFont*)nf {
 //    Class currentClass = [self class];
 //    NSLog(@"\n🎉 current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
     NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
-    [self hook_setFont3:c];
+    [self hook_NSMenuItem_setFont:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
 // success
-- (void)hook_setFont4:(NSFont*)nf {
+- (void)hook_NSTabViewItem_setFont:(NSFont*)nf {
 //    Class currentClass = [self class];
 //    NSLog(@"\n🎉 current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
     NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
-    [self hook_setFont4:c];
+    [self hook_NSTabViewItem_setFont:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
 // success
-- (void)hook_setFont5:(NSFont*)nf {
+- (void)hook_NSLabel_setFont:(NSFont*)nf {
 //    Class currentClass = [self class];
 //    NSLog(@"\n🎉 current class:%@\n", NSStringFromClass(currentClass));
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
     NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
-    [self hook_setFont5:c];
+    [self hook_NSLabel_setFont:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
 }
 
+// Test
+- (void)hook_MMAvatarImageView_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_MMAvatarImageView_setFont:c];
+}
+
+// Test
+- (void)hook_MMButton_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_MMButton_setFont:c];
+}
+
+// Test
+- (void)hook_MMMessageUnreadTipsButton_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_MMMessageUnreadTipsButton_setFont:c];
+}
+
+// Test
+- (void)hook_MMOutlineButton_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_MMOutlineButton_setFont:c];
+}
+
+// Test
+- (void)hook_MMTextField_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_MMTextField_setFont:c];
+}
+// Test
+- (void)hook_NSButtonCell_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_NSButtonCell_setFont:c];
+}
+// Test
+- (void)hook_NSImageCell_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_NSImageCell_setFont:c];
+}
+// Test
+- (void)hook_NSImageView_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_NSImageView_setFont:c];
+}
+// Test
+- (void)hook_NSMenu_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_NSMenu_setFont:c];
+}
+
+// Test
+- (void)hook_NSScroller_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_NSScroller_setFont:c];
+}
+
+// Test
+- (void)hook_NSTextView_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_NSTextView_setFont:c];
+}
+
+// Test
+- (void)hook_RFOverlayScrollerj_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_RFOverlayScrollerj_setFont:c];
+}
+
+// Test
+- (void)hook_SVGButton_setFont:(NSFont*)nf {
+    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    [self hook_SVGButton_setFont:c];
+}
 
 @end
 
