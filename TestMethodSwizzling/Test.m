@@ -28,7 +28,7 @@ void lm_hookMethod(Class originalClass, SEL originalSelector, Class swizzledClas
                                        originalSelector,
                                        method_getImplementation(swizzledMethod),
                                        method_getTypeEncoding(swizzledMethod));
-        //成功，将原方法的实现替换到替换方法的实现
+        //成功，将原方法的实现替沈烨换到替换方法的实现
         if (addSucc) {
             NSLog(@"add method success\n");
         }
@@ -81,12 +81,12 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
 //    [self changeMethod: "NSCTFont" om:@"displayName" sm:@"hook_displayName"];
 //    [self changeMethod: "NSCTFont" om:@"_similarFontWithName" sm:@"hook__similarFontWithName"];
 
-    [self changeMethod: "NSTextField" om:@"setFont:" sm:@"hook_setFont:"];
-    [self changeMethod: "NSTextFieldCell" om:@"setFont:" sm:@"hook_setFont1:"];
-    [self changeMethod: "NSButton" om:@"setFont:" sm:@"hook_setFont2:"];
-    [self changeMethod: "NSMenuItem" om:@"setFont:" sm:@"hook_setFont3:"];
-    [self changeMethod: "NSTabViewItem" om:@"setFont:" sm:@"hook_setFont4:"];
-    [self changeMethod: "NSLabel" om:@"setFont:" sm:@"hook_setFont5:"];
+//    [self changeMethod: "NSTextField" om:@"setFont:" sm:@"hook_setFont:"];
+//    [self changeMethod: "NSTextFieldCell" om:@"setFont:" sm:@"hook_setFont1:"];
+//    [self changeMethod: "NSButton" om:@"setFont:" sm:@"hook_setFont2:"];
+//    [self changeMethod: "NSMenuItem" om:@"setFont:" sm:@"hook_setFont3:"];
+//    [self changeMethod: "NSTabViewItem" om:@"setFont:" sm:@"hook_setFont4:"];
+//    [self changeMethod: "NSLabel" om:@"setFont:" sm:@"hook_setFont5:"];
 }
 
 /* 获取对象的所有方法 */
@@ -291,7 +291,7 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    NSFont *c = [self generateFont: nf.pointSize originalFont:nf];
     [self hook_setFont:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
@@ -303,7 +303,7 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    NSFont *c = [self generateFont: nf.pointSize originalFont:nf];
     [self hook_setFont1:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
@@ -315,7 +315,7 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    NSFont *c = [self generateFont: nf.pointSize originalFont:nf];
     [self hook_setFont2:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
@@ -327,7 +327,7 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    NSFont *c = [self generateFont: nf.pointSize originalFont:nf];
     [self hook_setFont3:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
@@ -339,7 +339,7 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    NSFont *c = [self generateFont: nf.pointSize originalFont:nf];
     [self hook_setFont4:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
@@ -351,7 +351,7 @@ NSString *AppleColorEmoji = @"AppleColorEmoji";
     //[self logParents];
 //    NSFont *c = [NSFont fontWithName:@"Baskerville" size:NSFont.systemFontSize];
 //    NSTextField *c = originalImp(self, originalClassMethodSel);
-    NSFont *c = [self generateFont: nf.pointSize originalFont:NULL];
+    NSFont *c = [self generateFont: nf.pointSize originalFont:nf];
     [self hook_setFont5:c];
     //NSLog(@"\n🎉 Call initialize method success\n");
     //NSLog(@"\nFinish~~\n");
